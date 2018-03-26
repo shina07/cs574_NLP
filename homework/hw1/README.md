@@ -1,6 +1,41 @@
 # [HW1] Sentiment Analysis (Classification Task)
 
 
+## Development Environment Setting
+
+This homework was implemented under the following environment
+- Python 3.6.3
+- Virtualenv 15.0.1
+
+Additional packages can be downloaded from ```pip``` with using requirement.txt via following command
+
+	$ pip install -r requirement.txt
+    
+This will install ```nltk 3.2.5``` and ```scikit-learn``` from ```pip```.
+
+After Installing ```nltk``` and ```scikit-learn``` we have to install ```punkt```, ```stopwords``` in via nltk downloader.
+
+	Python 3.6.3
+	[GCC X.X.X xxxxx] on linux
+	Type "help", "copyright", "credits" or "license" for more information.
+
+	>>> import nltk
+	>>> nltk.download('punkt')
+	>>> nltk.download('stopwords')
+
+
+We can download ```punkt``` via nltk downloader on ```python``` console.
+
+## How to run
+
+As long as the required packages are all installed, the only command to run this code is 
+
+	$ python NaiveBayesClassifier.py
+    
+## Report
+- In this homework, loading dataset from large file is not fully implemented (it can load it, but it doesn't get test set from provided test sets)
+- Running with large dataset has never been fully tested.
+
 ## Available Dataset
 
 - #### Movie Review Dataset (small)
@@ -17,6 +52,7 @@
 		- 25,000 training examples, 25,000 test examples
 		- 80 MB compressed (Approximately 480 MB uncompressed)
 	- Reference site: http://ai.stanford.edu/~amaas/data/sentiment
+
 
 ## Tool You Can Use
 
