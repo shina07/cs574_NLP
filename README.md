@@ -18,11 +18,10 @@ This repository is for course work of CS574 Natural Language Processing 1 at KAI
         	...
             (return the prediction of the classifier)
 
-	This will be run by the following command
-
-		$ python train.py
-
 - Evaluating Classifier
 
-		$ python test.py
+
+#### How to Run
+
+		$ python SentimentAnalyzer.py
 
