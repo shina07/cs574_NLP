@@ -1,0 +1,41 @@
+\section{Team details}
+\begin{description}
+  \item[Team:] Optimistic Cat Monkeys
+  \item[Team members:] See authors below title
+  \item[Division of labor:] At the moment we are planning to split the work
+    quite equally; Everybody will take part in planning, implementation and
+    documentation.
+  \item[Diversity:] 3 different nationalities. One female member.
+\end{description}
+
+
+\section{Problem setup and motivation}
+
+The problem we want to solve is summarising a long text, such as a novel or screenplay. We formally define this as summarising a monolingual single-document text of over 5000 words to one under 1000 words, while retaining the important essence of the information.\\
+We think this is an interesting problem to solve, because summarising short articles is a fairly common application of NLP, but algorithms that can summarize long pieces are less present in literature. Even summarising multiple short documents, such as emails and news articles, is also an application receiving attention. Columbia Newsblaster is one popular news summary available online. \\
+The applications of automatic book summaries specifically include it being less biased than people, and it can help decide whether to read/purchase a book through a quick overview. Additionally, it could help refresh one's memory of a book they read before, or help determine whether a certain reference book is relevant.\\
+Thus, we have a place to start (short article summary), but still have to come up with new solutions. There exists a sizeable body of literature focusing on automatic text summarization, and a useful starting point is recent review papers. Upon gaining some more experience in NLP methods, we can then compare the various approaches in the review papers, both with machine learning and without, and choose what seems like a feasible first method. \cite{Kumar2016}
+
+
+\section{Proposed approach}
+
+Existing automatic text summary algorithms fall into two general approaches: extractive and abstractive. Extractive methods involve identifying the most important phrases and compiling them verbatim into a shorter text. This method is the simpler, but reads less naturally and might perform even less effectively when scaled to large text. Abstractive methods identify the most important information, and rephrase them into a coherent summary. This method is more challenging because it involves identifying information as well as generating text. However, it reduces redundancy and it reads more naturally, also being similar to how humans summarise texts. \cite{Gaikwad2016} \\
+The project approach would probably work best by building in complexity, creating working algorithms and then progressing to the next goal: from extractive to abstractive, and from short text to long ones. The summarization would be based on features such as term frequency, similarity and proper nouns. With article summarization, there is a heavy emphasis on comparing text to the title, which works well because the title normally is a very concise wording of the most important idea. However, with books this is usually not the case, so we must also develop better ways to identify information as important.
+
+\section{Evaluation plan}
+
+As we have already mentioned in 1.2 Problem Setup and Motivation, it is somewhat common to summarize article-length text. Since our final goal is to shrink the length of text of size over 5000 words into similar level of summarized article, it is possible to adopt some techniques suggested from the other summarizers in theory. \\
+However, we have to note the difference of the mechanism of summarization between books and articles. Most of prominent techniques in text summarizations are primarily focusing on making few paragraphs compact to one or two paragraphs with preserving the semantics. Our team is expecting to find another approach that allows us to disassemble a long text into few groups of relatively shorter documents, and again and again until we can reach to favorable length to read. We perhaps need another evaluation method - such as text similarity \cite{Do2010RobustLA} - in intermediate steps. \\
+Moreover, there are not particularly proposed method of evaluation among most of the abstract summarization methods. There are plenty of approaches in text summarization technique, but many different approaches in abstractive methods have many different limitation. Some methods are evaluated manually by man, and some methods are limited to certain languages. It seems that most of extractive methods provide actual numerical value of accuracy, so we are looking through them.
+
+\section{Plan of work}
+
+\begin{enumerate}
+  \item Get a simple summarising system that can summarize short texts working, by taking some currently used techniques
+  \item Get another - or come up with another - system that can summarize long text to relatively shorter text with preserving the semantics.
+  \item Connect those two systems (or multiple of systems in layer) to summarize long text to be much shorter.
+  \item Adopt Evaluation plan used in semantic based approaches in abstractive methods to gauge accuracy of our system. (Up to here is planned to be done until next proposal)
+  \item If it turned out to be no way to evaluate our system, then consider pivoting of the idea from the beginning
+  \item If it seems producing some meaningful results, then stick to the initial plan
+\end{enumerate}
+
