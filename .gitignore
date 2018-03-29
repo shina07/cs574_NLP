@@ -1,0 +1,43 @@
+###########################
+        # GENERAL
+###########################
+# Python
+*.pyc
+
+# Vim
+*.swp
+*.swo
+*.sw~
+
+###########################
+        # PROJECT
+###########################
+# Latex
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.log
+*.out
+*.run.xml
+
+# 1. Project Summary
+assignment.pdf
+
+
+
+###########################
+        # HOMEWORK
+###########################
+# Virtualenv
+bin/
+include/
+lib/
+pip-selfcheck.json
+share/
+
+# HW1 Dataset
+aclImdb/
+review_polarity/
+
+
