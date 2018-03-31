@@ -3,6 +3,7 @@
 ###########################
 # Python
 *.pyc
+__pycache__
 
 # Vim
 *.swp
@@ -39,5 +40,8 @@ share/
 # HW1 Dataset
 aclImdb/
 review_polarity/
+
+# HW2 Dataset
+data/
 
 

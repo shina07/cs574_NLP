@@ -4,6 +4,8 @@ This repository is for course work of CS574 Natural Language Processing 1 at KAI
 
 ## [Programming HW1] Sentiment Analysis (Classification Task)
 
+Detailed information is in another README.md in homework/hw1 directory.
+
 #### How to Run
 
 		$ python SentimentAnalyzer.py
@@ -20,7 +22,14 @@ This repository is for course work of CS574 Natural Language Processing 1 at KAI
     After finished running ```SentimentAnalyzer.py```, the results will be evaluated with precision, recall, and f1 score, using the open source ```scikit-learn```.
 
 
-## [Programming HW2]
+## [Programming HW2] Semi-Supervised Text Classification
+
+
+
+## Project
+
+
+
 
 
 
