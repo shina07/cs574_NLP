@@ -28,6 +28,11 @@ Detailed information is in another README.md in homework/hw1 directory.
 
 ## Project
 
+#### Project Summary : 3/29
+
+it is possible to view the project summary by compiling assignment.tex
+
+#### Proposal
 
 
 
