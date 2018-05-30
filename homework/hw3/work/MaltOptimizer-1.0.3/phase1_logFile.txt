@@ -1,0 +1,13 @@
+Training set path:homer_train.conll
+Size (tokens):155645
+Size (sentences):10117
+Non projective:82.35642977167144
+Dangling Punctuation:359
+LAS:54.47
+Default:53.7
+NumRootLabels:121
+JavaHeap:-Xmx2048m
+MaxTokens:55646
+CposEqPos:false
+LemmaBlank:false
+FeatsBlank:false
