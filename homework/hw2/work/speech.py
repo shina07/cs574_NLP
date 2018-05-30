@@ -27,23 +27,33 @@ def read_files(data_loc):
     speech.dev_data, speech.dev_fnames, speech.dev_labels = read_tsv(data_loc, "dev.tsv")
     print(len(speech.dev_data))
 
+    # print ("TRAIN: ", "data: ", speech.train_data[1], "fnames: ", speech.train_fnames[1], "label: ", speech.train_labels[1])
+
     print ("-- test data")
-    test_data, test_fnames = read_unlabeled(data_loc,'test')
-    print (len(test_fnames))
+    speech.test_data, speech.test_fnames = read_unlabeled(data_loc,'test')
+    print (len(speech.test_fnames))
 
     print("-- unlabeled data")
-    unlabeled_data, unlabeled_fnames = read_unlabeled(data_loc, 'unlabeled')
-    print(len(unlabeled_fnames))
+    speech.unlabeled_data, speech.unlabeled_fnames = read_unlabeled(data_loc, 'unlabeled')
+    print(len(speech.unlabeled_fnames))
+
+    # print ("TEST: ", "data: ", test_data[1], "fnames: ", test_fnames[1])
 
     print("-- transforming data and labels")
     from sklearn.feature_extraction.text import CountVectorizer
     speech.count_vect = CountVectorizer(tokenizer=lambda doc: doc, lowercase=False)
+    
+    # from sklearn.feature_extraction.text import TfidfVectorizer
+    # speech.count_vect = TfidfVectorizer(tokenizer=lambda doc: doc, lowercase=False)
+    
     speech.trainX = speech.count_vect.fit_transform(speech.train_data)
 
+    # print ("TrainX: \n",speech.trainX)
+
     speech.devX = speech.count_vect.transform(speech.dev_data)
-    speech.testX = speech.count_vect.transform(test_data)
-    speech.test_fnames = test_fnames
-    speech.unlabeledX = speech.count_vect.transform(unlabeled_data)
+    # speech.testX = speech.count_vect.transform(test_data)
+    # speech.test_fnames = test_fnames
+    speech.unlabeledX = speech.count_vect.transform(speech.unlabeled_data)
 
     from sklearn import preprocessing
     speech.le = preprocessing.LabelEncoder()
@@ -117,6 +127,60 @@ def write_pred_kaggle_file(cls, outfname, speech):
         f.write(fname + ',' + labels[i] + '\n')
     f.close()
 
+def expand_labeled (cls, speech, accuracy):
+    assert (accuracy > 0 and accuracy < 1) # accuracy should be in the range of 0 to 1
+
+    print ("-- predicting unlabeled")
+    yp = cls.predict (speech.unlabeledX)
+    predicted_prob = cls.predict_proba (speech.unlabeledX)
+    labels = speech.le.inverse_transform (yp)
+
+    # print ("Predict: ", yp)
+    # print ("Predict Proba: ", pr_proba)
+    # print ("Labels: ", labels, len (labels))
+
+    train_data = speech.train_data
+    train_fnames = speech.train_fnames
+    train_labels = speech.train_labels
+
+    import numpy as np
+    print ("-- expanding labeled dataset from unlabeled with accuracy >", accuracy)
+    for i in range (len (speech.unlabeled_fnames)):
+        fname = speech.unlabeled_fnames[i]
+        max_value = max (predicted_prob[i])
+        # AttributeError: 'numpy.ndarray' object has no attribute 'index'  
+        # max_index = predicted_prob.tolist ().index (max_value)
+        max_index = np.argmax (predicted_prob[i])
+
+        if (max_value > accuracy):
+            train_data.append (speech.unlabeled_data[i])
+            train_fnames.append (fname)
+            train_labels.append (speech.target_labels [max_index])
+
+    speech.train_data = train_data
+    speech.train_fnames = train_fnames
+    speech.train_labels = train_labels
+
+    print("-- transforming data and labels (with TF-IDF)")
+    # from sklearn.feature_extraction.text import TfidfVectorizer
+    # speech.count_vect = TfidfVectorizer(tokenizer=lambda doc: doc, lowercase=False)
+    # count_vect = TfidfVectorizer(analyzer = 'word', norm = '12', sublinear_tf = 'True')
+    
+    from sklearn.feature_extraction.text import CountVectorizer
+    speech.count_vect = CountVectorizer(tokenizer=lambda doc: doc, lowercase=False)
+    
+    speech.trainX = speech.count_vect.fit_transform (speech.train_data)
+
+    from sklearn import preprocessing
+    speech.le = preprocessing.LabelEncoder ()
+    speech.le.fit (speech.train_labels)
+    speech.target_labels = speech.le.classes_
+    speech.trainy = speech.le.transform (speech.train_labels)
+
+    speech.testX = speech.count_vect.transform(speech.test_data)
+
+    return speech
+
 if __name__ == "__main__":
     print("Reading data")
     data_loc = "data/"
@@ -129,6 +193,47 @@ if __name__ == "__main__":
     print("Evaluating")
     classify.evaluate(speech.trainX, speech.trainy, cls)
     classify.evaluate(speech.devX, speech.devy, cls)
+
+    print ("Expanding Labeled Data")
+    speech = expand_labeled (cls, speech, 0.90)
+
+    print ("Expanding Labeled Data")
+    speech = expand_labeled (cls, speech, 0.85)
+
+    print ("Expanding Labeled Data")
+    speech = expand_labeled (cls, speech, 0.80)
+
+    print ("Expanding Labeled Data")
+    speech = expand_labeled (cls, speech, 0.75)
+
+    print("Training classifier Again")
+    cls = classify.train_classifier (speech.trainX, speech.trainy)
+
+    print("Evaluating")
+    classify.evaluate(speech.trainX, speech.trainy, cls)
+
+
+    # print ("Expanding Labeled Data")
+    # speech = expand_labeled (cls, speech, 0.95)
+    # print("Training classifier Again")
+    # cls = classify.train_classifier (speech.trainX, speech.trainy)
+    # # print("Evaluating")
+    # # classify.evaluate(speech.trainX, speech.trainy, cls)
+
+    # print ("Expanding Labeled Data")
+    # speech = expand_labeled (cls, speech, 0.90)
+    # print("Training classifier Again")
+    # cls = classify.train_classifier (speech.trainX, speech.trainy)
+    # # print("Evaluating")
+    # # classify.evaluate(speech.trainX, speech.trainy, cls)
+
+    # print ("Expanding Labeled Data")
+    # speech = expand_labeled (cls, speech, 0.85)
+    # print("Training classifier Again")
+    # cls = classify.train_classifier (speech.trainX, speech.trainy)
+    # # print("Evaluating")
+    # # classify.evaluate(speech.trainX, speech.trainy, cls)
+
 
     print("Writing Kaggle pred file")
     write_pred_kaggle_file(cls, "data/speech-pred.csv", speech)
