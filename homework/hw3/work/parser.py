@@ -14,26 +14,12 @@ if __name__ == '__main__':
 		print_usage ()
 		sys.exit ()
 
-	# if ((argc < 3) or (argc > 5) or (argc / 2 != 1)):
-	# 	print_usage ()
-	# 	sys.exit ()
-
-	# mode = 0
-	# user_input = ""
-
-	# for i in range (len (argv)):
-	# 	if argv [i] == "-m":
-	# 		if argv [i + 1] == "sentence":
-	# 			continue
-	# 		elif argv [i + 1] == "file"
 
 	user_input = argv [0]
 	tokens = user_input.split ()
 
-	sent = 'Time files like banana'.split ()
-
 	mp = MaltParser (PATH_TO_MALTPARSER, PATH_TO_MODEL)
-	graph = mp.parse_one (sent).tree()
+	graph = mp.parse_one (tokens).tree()
 	print (graph)
 
 

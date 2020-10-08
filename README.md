@@ -24,6 +24,8 @@ Detailed information is in another README.md in homework/hw1 directory.
 
 ## [Programming HW2] Semi-Supervised Text Classification
 
+## [Programming HW3] word-embedding using Malt Parser
+
 
 
 ## Project
